@@ -1,0 +1,28 @@
+﻿<Window x:Class="WatchStore.WPF.Views.AddEditManufacturerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Производитель" Height="200" Width="300" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Название:"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="NameTextBox" Margin="5"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Страна:"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="CountryTextBox" Margin="5"/>
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Сохранить" Width="80" Margin="5" Click="SaveButton_Click"/>
+            <Button Content="Отмена" Width="80" Margin="5" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
