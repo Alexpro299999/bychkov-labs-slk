@@ -1,0 +1,36 @@
+﻿<Window x:Class="WatchStore.WPF.Views.AddEditWatchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Часы" Height="280" Width="350" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Модель:"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="ModelTextBox" Margin="5"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Тип:"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="TypeTextBox" Margin="5"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Цена:"/>
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="PriceTextBox" Margin="5"/>
+
+        <Label Grid.Row="3" Grid.Column="0" Content="Производитель:"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="ManufacturerComboBox" Margin="5" DisplayMemberPath="ManufacturerName"/>
+
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Сохранить" Width="80" Margin="5" Click="SaveButton_Click"/>
+            <Button Content="Отмена" Width="80" Margin="5" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

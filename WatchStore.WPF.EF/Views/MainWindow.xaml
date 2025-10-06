@@ -1,0 +1,84 @@
+﻿<Window x:Class="WatchStore.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WatchStore.WPF"
+        mc:Ignorable="d"
+        Title="Магазин Часов" Height="550" Width="900">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Производители">
+                <Grid>
+                    <DataGrid x:Name="ManufacturersGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="5,5,5,40">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" Binding="{Binding ManufacturerName}" Width="*"/>
+                            <DataGridTextColumn Header="Страна" Binding="{Binding Country}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5">
+                        <Button Content="Добавить" Width="80" Margin="5" Click="AddManufacturer_Click"/>
+                        <Button Content="Изменить" Width="80" Margin="5" Click="EditManufacturer_Click"/>
+                        <Button Content="Удалить" Width="80" Margin="5" Click="DeleteManufacturer_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Часы">
+                <Grid>
+                    <DataGrid x:Name="WatchesGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="5,5,5,40">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Модель" Binding="{Binding WatchModel}" Width="*"/>
+                            <DataGridTextColumn Header="Тип" Binding="{Binding WatchType}" Width="*"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat=C}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5">
+                        <Button x:Name="AddWatchButton" Content="Добавить" Width="80" Margin="5" Click="AddWatch_Click"/>
+                        <Button x:Name="EditWatchButton" Content="Изменить" Width="80" Margin="5" Click="EditWatch_Click"/>
+                        <Button x:Name="DeleteWatchButton" Content="Удалить" Width="80" Margin="5" Click="DeleteWatch_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Склад">
+                <Grid>
+                    <DataGrid x:Name="StockGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="5,5,5,40">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Модель Часов" Binding="{Binding WatchModel}" Width="*"/>
+                            <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="*"/>
+                            <DataGridTextColumn Header="Дата поставки" Binding="{Binding DeliveryDate, StringFormat='dd.MM.yyyy'}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5">
+                        <Button Content="Добавить" Width="80" Margin="5" Click="AddStock_Click"/>
+                        <Button Content="Изменить" Width="80" Margin="5" Click="EditStock_Click"/>
+                        <Button Content="Удалить" Width="80" Margin="5" Click="DeleteStock_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Запросы и Отчеты">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <Label Content="Запросы:" FontWeight="Bold"/>
+                        <Button Content="Марки по типу" Margin="0,5" Click="QueryWatchesByType_Click"/>
+                        <Button Content="Механические (дешевле чем...)" Margin="0,5" Click="QueryMechanicalCheaperThan_Click"/>
+                        <Button Content="Марки по стране" Margin="0,5" Click="QueryWatchesByCountry_Click"/>
+                        <Button Content="Производители (дешевле чем...)" Margin="0,5" Click="QueryManufacturersByValue_Click"/>
+                        <Button Content="Марки с общей стоимостью" Margin="0,5" Click="QueryWatchesWithTotalValue_Click"/>
+                        <Separator Margin="0,20"/>
+                        <Label Content="Отчеты:" FontWeight="Bold"/>
+                        <Button Content="1. Отчет по всем часам (Word)" Margin="0,5" Click="AllWatchesReport_Click"/>
+                        <Button Content="2. Отчет по механическим часам" Margin="0,5" Click="ReportMechanicalWatches_Click"/>
+                        <Button Content="3. Группирующий отчет" Margin="0,5" Click="ReportGrouped_Click"/>
+                    </StackPanel>
+                    <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+                    <DataGrid Grid.Column="2" x:Name="ResultsGrid" Margin="10" IsReadOnly="True" AutoGenerateColumns="True"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
