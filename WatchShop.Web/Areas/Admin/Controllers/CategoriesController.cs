@@ -16,23 +16,22 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             _categoryRepo = categoryRepo;
         }
 
-        // GET: Admin/Categories
         public async Task<IActionResult> Index()
         {
             return View(await _categoryRepo.GetAllAsync());
         }
 
-        // GET: Admin/Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Create(Category category)
         {
+            ModelState.Remove("Watches");
+
             if (ModelState.IsValid)
             {
                 await _categoryRepo.AddAsync(category);
@@ -41,7 +40,6 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             return View(category);
         }
 
-        // GET: Admin/Categories/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var category = await _categoryRepo.GetAsync(id);
@@ -52,32 +50,25 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             return View(category);
         }
 
-        // POST: Admin/Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Edit(int id, Category category)
         {
             if (id != category.Id)
             {
                 return NotFound();
             }
 
+            ModelState.Remove("Watches");
+
             if (ModelState.IsValid)
             {
-                try
-                {
-                    await _categoryRepo.UpdateAsync(category);
-                }
-                catch
-                {
-                    return NotFound();
-                }
+                await _categoryRepo.UpdateAsync(category);
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
-        // GET: Admin/Categories/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _categoryRepo.GetAsync(id);
@@ -89,7 +80,6 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             return View(category);
         }
 
-        // POST: Admin/Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

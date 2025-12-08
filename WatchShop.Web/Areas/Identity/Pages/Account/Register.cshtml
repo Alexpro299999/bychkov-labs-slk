@@ -15,41 +15,37 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
                     <div class="mb-3">
-                        <label asp-for="Input.FirstName" class="form-label fw-bold">Имя</label>
-                        <input asp-for="Input.FirstName" class="form-control" placeholder="Иван" autocomplete="firstname" />
+                        <label asp-for="Input.FirstName" class="form-label fw-bold"></label>
+                        <input asp-for="Input.FirstName" class="form-control" placeholder="Иван" autocomplete="firstname" aria-required="true" />
                         <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Input.LastName" class="form-label fw-bold">Фамилия</label>
-                        <input asp-for="Input.LastName" class="form-control" placeholder="Иванов" autocomplete="lastname" />
+                        <label asp-for="Input.LastName" class="form-label fw-bold"></label>
+                        <input asp-for="Input.LastName" class="form-control" placeholder="Иванов" autocomplete="lastname" aria-required="true" />
                         <span asp-validation-for="Input.LastName" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Input.Email" class="form-label fw-bold">Email</label>
-                        <input asp-for="Input.Email" class="form-control" placeholder="name@example.com" autocomplete="username" />
+                        <label asp-for="Input.Email" class="form-label fw-bold"></label>
+                        <input asp-for="Input.Email" class="form-control" placeholder="name@example.com" autocomplete="username" aria-required="true" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Input.Password" class="form-label fw-bold">Пароль</label>
+                        <label asp-for="Input.Password" class="form-label fw-bold"></label>
                         <div class="input-group">
-                            <input asp-for="Input.Password" type="password" class="form-control" id="passwordInput" placeholder="Придумайте пароль" autocomplete="new-password" />
-                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('passwordInput', this)">
-                                👁️
-                            </button>
+                            <input asp-for="Input.Password" type="password" class="form-control" id="passwordInput" placeholder="Пароль" autocomplete="new-password" aria-required="true" />
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('passwordInput', this)">👁️</button>
                         </div>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Input.ConfirmPassword" class="form-label fw-bold">Повторите пароль</label>
+                        <label asp-for="Input.ConfirmPassword" class="form-label fw-bold"></label>
                         <div class="input-group">
-                            <input asp-for="Input.ConfirmPassword" type="password" class="form-control" id="confirmPasswordInput" placeholder="Повторите пароль" autocomplete="new-password" />
-                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPasswordInput', this)">
-                                👁️
-                            </button>
+                            <input asp-for="Input.ConfirmPassword" type="password" class="form-control" id="confirmPasswordInput" placeholder="Повторите пароль" autocomplete="new-password" aria-required="true" />
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPasswordInput', this)">👁️</button>
                         </div>
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
@@ -67,7 +63,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-
     <script>
         function togglePassword(inputId, btn) {
             var input = document.getElementById(inputId);
@@ -76,7 +71,7 @@
                 btn.innerText = "🙈";
             } else {
                 input.type = "password";
-                btn.innerText = "👁️"; 
+                btn.innerText = "👁️";
             }
         }
     </script>

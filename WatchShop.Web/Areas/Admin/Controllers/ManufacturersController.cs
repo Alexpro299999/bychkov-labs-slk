@@ -16,23 +16,22 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             _manufacturerRepo = manufacturerRepo;
         }
 
-        // GET: Admin/Manufacturers
         public async Task<IActionResult> Index()
         {
             return View(await _manufacturerRepo.GetAllAsync());
         }
 
-        // GET: Admin/Manufacturers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Manufacturers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Manufacturer manufacturer)
+        public async Task<IActionResult> Create(Manufacturer manufacturer)
         {
+            ModelState.Remove("Watches");
+
             if (ModelState.IsValid)
             {
                 await _manufacturerRepo.AddAsync(manufacturer);
@@ -41,7 +40,6 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             return View(manufacturer);
         }
 
-        // GET: Admin/Manufacturers/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var manufacturer = await _manufacturerRepo.GetAsync(id);
@@ -52,15 +50,16 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             return View(manufacturer);
         }
 
-        // POST: Admin/Manufacturers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Manufacturer manufacturer)
+        public async Task<IActionResult> Edit(int id, Manufacturer manufacturer)
         {
             if (id != manufacturer.Id)
             {
                 return NotFound();
             }
+
+            ModelState.Remove("Watches");
 
             if (ModelState.IsValid)
             {
@@ -70,7 +69,6 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             return View(manufacturer);
         }
 
-        // GET: Admin/Manufacturers/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var manufacturer = await _manufacturerRepo.GetAsync(id);
@@ -81,7 +79,6 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             return View(manufacturer);
         }
 
-        // POST: Admin/Manufacturers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

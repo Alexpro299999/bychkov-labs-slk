@@ -1,12 +1,10 @@
 ﻿@model WatchShop.Web.Areas.Admin.Models.WatchViewModel
 
 @{
-    ViewData["Title"] = "Редактировать";
+    ViewData["Title"] = "Редактировать товар";
 }
 
-<h1>Редактировать</h1>
-
-<h4>Товар (Часы)</h4>
+<h1>Редактировать товар</h1>
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -16,32 +14,32 @@
             <input type="hidden" asp-for="ImageUrl" />
 
             <div class="mb-3">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Название</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label">Описание</label>
                 <textarea asp-for="Description" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Price" class="control-label"></label>
+                <label asp-for="Price" class="control-label">Цена</label>
                 <input asp-for="Price" class="form-control" type="number" step="0.01" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label>Текущее изображение</label>
-                <div>
-                    <img src="@(Model.ImageUrl ?? "/images/tclassic.jpg")" class="img-fluid rounded" style="max-width: 200px;" />
+                <div class="mb-2">
+                    <img src="@(Model.ImageUrl ?? "/images/tclassic.jpg")" class="img-fluid rounded" style="max-width: 150px;" />
                 </div>
             </div>
 
             <div class="mb-3">
-                <label asp-for="ImageFile" class="control-label">Загрузить новое изображение</label>
+                <label asp-for="ImageFile" class="control-label">Загрузить новое (необязательно)</label>
                 <input asp-for="ImageFile" class="form-control" type="file" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
@@ -60,7 +58,7 @@
 
             <div class="mb-3">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Назад к списку</a>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Назад</a>
             </div>
         </form>
     </div>

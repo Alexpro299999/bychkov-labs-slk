@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WatchShop.DataAccess.Models.Watch>
 
 @{
-    ViewData["Title"] = "Управление товарами";
+    ViewData["Title"] = "Товары";
 }
 
 <h1>Управление товарами</h1>
@@ -9,48 +9,32 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Добавить новый товар</a>
 </p>
-<table class="table">
+<table class="table align-middle">
     <thead>
         <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manufacturer)
-            </th>
+            <th>Изображение</th>
+            <th>Название</th>
+            <th>Цена</th>
+            <th>Категория</th>
+            <th>Производитель</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr class="align-middle">
+            <tr>
                 <td>
-                    <img src="@(item.ImageUrl ?? "/images/tclassic.jpg")" class="img-fluid rounded" style="max-width: 75px;" alt="@item.Name" />
+                    <img src="@(item.ImageUrl ?? "/images/tclassic.jpg")" class="img-fluid rounded" style="max-width: 60px;" alt="@item.Name" />
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Manufacturer.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                <td>@item.Name</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@item.Category?.Name</td>
+                <td>@item.Manufacturer?.Name</td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Изменить</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Детали</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Удалить</a>
                 </td>
             </tr>
         }

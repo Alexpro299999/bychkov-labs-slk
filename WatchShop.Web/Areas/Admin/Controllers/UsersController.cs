@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WatchShop.DataAccess;
 using WatchShop.DataAccess.Models;
 using WatchShop.Web.Areas.Admin.Models;
 
@@ -81,10 +80,6 @@ namespace WatchShop.Web.Areas.Admin.Controllers
 
             viewModel.Roles = await _roleManager.Roles.ToListAsync();
             viewModel.UserRoles = await _userManager.GetRolesAsync(user);
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
             return View(viewModel);
         }
 
@@ -103,11 +98,7 @@ namespace WatchShop.Web.Areas.Admin.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                var result = await _userManager.DeleteAsync(user);
-                if (!result.Succeeded)
-                {
-                    // Обработка ошибок, если не удалось удалить
-                }
+                await _userManager.DeleteAsync(user);
             }
             return RedirectToAction(nameof(Index));
         }

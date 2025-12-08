@@ -1,27 +1,19 @@
 ﻿@model WatchShop.DataAccess.Models.Category
 
 @{
-    ViewData["Title"] = "Удаление";
+    ViewData["Title"] = "Удалить категорию";
 }
 
-<h1>Удаление</h1>
+<h1>Удалить категорию</h1>
 
-<h3 class="text-danger">Вы уверены, что хотите удалить эту категорию?</h3>
+<h3>Вы уверены, что хотите удалить эту запись?</h3>
 <div>
-    <h4>Категория</h4>
+    <h4>@Model.Name</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-outline-secondary ms-2">Назад к списку</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
     </form>
 </div>

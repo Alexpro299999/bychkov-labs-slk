@@ -1,20 +1,16 @@
 ﻿@model WatchShop.DataAccess.Models.Order
+
 @{
     ViewData["Title"] = "Заказ подтвержден";
 }
 
-<div class="container text-center">
-    <h1 class="text-success">Заказ #@Model.Id успешно оформлен!</h1>
-    <p class="lead">Спасибо за покупку, @Model.CustomerName.</p>
-    <p>Мы свяжемся с вами по email (@Model.Email) или по телефону (@Model.Phone) для уточнения деталей доставки по адресу: @Model.Address.</p>
-    <hr />
-    <div class="alert alert-secondary">
-        <p class="mb-0"><strong>Дата заказа:</strong> @Model.OrderDate.ToShortDateString()</p>
-        <p class="mb-0"><strong>Итоговая сумма:</strong> @Model.Total.ToString("C")</p>
-        <p class="mb-0"><strong>Статус:</strong> @Model.Status</p>
-    </div>
+<div class="text-center mt-5">
+    <h1 class="display-4 text-success">Спасибо за покупку!</h1>
+    <p class="lead">Ваш заказ <strong>#@Model.Id</strong> успешно оформлен.</p>
+    <p>Мы отправили подтверждение на <strong>@Model.Email</strong>.</p>
+
     <div class="mt-4">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg">Вернуться в каталог</a>
-        <a asp-controller="Order" asp-action="MyOrders" class="btn btn-outline-secondary btn-lg ms-2">Посмотреть мои заказы</a>
+        <a asp-controller="Order" asp-action="MyOrders" class="btn btn-outline-primary">Посмотреть мои заказы</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Вернуться в каталог</a>
     </div>
 </div>

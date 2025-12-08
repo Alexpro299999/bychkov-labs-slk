@@ -22,6 +22,7 @@ namespace WatchShop.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
@@ -29,12 +30,14 @@ namespace WatchShop.Web.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender sender)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
@@ -59,13 +62,13 @@ namespace WatchShop.Web.Areas.Identity.Pages.Account
             [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Введите Email")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "{0} должен быть не менее {2} и не более {1} символов.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Введите пароль")]
+            [StringLength(100, ErrorMessage = "{0} должен быть не менее {2} символов.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Пароль")]
             public string Password { get; set; }
@@ -75,7 +78,6 @@ namespace WatchShop.Web.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
             public string ConfirmPassword { get; set; }
         }
-
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -91,9 +93,9 @@ namespace WatchShop.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -103,6 +105,12 @@ namespace WatchShop.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Проверяем и создаем роль, если нужно
+                    if (!await _roleManager.RoleExistsAsync("User"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("User"));
+                    }
 
                     await _userManager.AddToRoleAsync(user, "User");
 
@@ -146,8 +154,7 @@ namespace WatchShop.Web.Areas.Identity.Pages.Account
             catch
             {
                 throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
-                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor.");
             }
         }
 

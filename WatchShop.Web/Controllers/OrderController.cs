@@ -41,6 +41,7 @@ namespace WatchShop.Web.Controllers
                 ApplicationUserId = userId,
                 CustomerName = $"{user.FirstName} {user.LastName}",
                 Email = user.Email,
+                Phone = user.PhoneNumber
             };
 
             return View(order);
@@ -57,6 +58,13 @@ namespace WatchShop.Web.Controllers
                 ModelState.AddModelError("", "Ваша корзина пуста.");
                 return View(order);
             }
+
+     
+            ModelState.Remove("ApplicationUserId");
+            ModelState.Remove("ApplicationUser");
+            ModelState.Remove("OrderDetails");
+            ModelState.Remove("Status"); 
+            ModelState.Remove("Total");  
 
             if (ModelState.IsValid)
             {
@@ -78,12 +86,12 @@ namespace WatchShop.Web.Controllers
                     };
                     await _orderDetailRepo.AddAsync(orderDetail);
                 }
-
                 HttpContext.Session.Set<List<CartItem>>("Cart", null);
 
                 return RedirectToAction(nameof(Confirmation), new { id = order.Id });
             }
 
+ 
             return View(order);
         }
 
