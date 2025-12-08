@@ -1,4 +1,4 @@
-namespace WatchStore.DataAccess.Models
+namespace WatchShop.DataAccess.Models
 {
     public class Manufacturer
     {

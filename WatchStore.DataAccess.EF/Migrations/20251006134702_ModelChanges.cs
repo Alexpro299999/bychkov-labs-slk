@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace WatchStore.DataAccess.EF.Migrations
+namespace WatchShop.DataAccess.EF.Migrations
 {
     /// <inheritdoc />
     public partial class ModelChanges : Migration

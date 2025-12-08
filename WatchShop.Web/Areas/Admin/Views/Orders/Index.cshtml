@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WatchShop.DataAccess.Models.Order>
+
+@{
+    ViewData["Title"] = "Управление заказами";
+}
+
+<h1>Управление заказами</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                    <br />
+                    <small>@Html.DisplayFor(modelItem => item.ApplicationUser.Email)</small>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+                <td>
+                    @{
+                        string badgeClass = "bg-secondary";
+                        if (item.Status == "Принят") badgeClass = "bg-primary";
+                        else if (item.Status == "Сформирован") badgeClass = "bg-info";
+                        else if (item.Status == "Готов к выдаче") badgeClass = "bg-warning";
+                        else if (item.Status == "Выполнен") badgeClass = "bg-success";
+                    }
+                    <span class="badge @badgeClass">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </span>
+                </td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Детали</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

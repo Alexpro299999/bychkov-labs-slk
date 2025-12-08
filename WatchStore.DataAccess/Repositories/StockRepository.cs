@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
-using WatchStore.DataAccess.Models;
+using WatchShop.DataAccess.Models;
 
-namespace WatchStore.DataAccess.Repositories
+namespace WatchShop.DataAccess.Repositories
 {
     public class StockRepository
     {

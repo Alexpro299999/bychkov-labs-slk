@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.IO;
 
-namespace WatchStore.DataAccess
+namespace WatchShop.DataAccess
 {
     public static class DatabaseInitializer
     {

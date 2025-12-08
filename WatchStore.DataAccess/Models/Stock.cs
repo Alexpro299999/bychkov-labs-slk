@@ -1,6 +1,6 @@
 using System;
 
-namespace WatchStore.DataAccess.Models
+namespace WatchShop.DataAccess.Models
 {
     public class Stock
     {

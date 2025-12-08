@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WatchStore.WPF
+namespace WatchShop.WPF
 {
     public partial class App : Application
     {

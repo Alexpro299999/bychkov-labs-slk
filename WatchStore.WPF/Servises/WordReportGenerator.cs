@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using WatchStore.DataAccess.Models;
+using WatchShop.DataAccess.Models;
 using Word = Microsoft.Office.Interop.Word;
 using System.Linq;
 
-namespace WatchStore.WPF.Services
+namespace WatchShop.WPF.Services
 {
     public class WordReportGenerator
     {

@@ -1,0 +1,83 @@
+﻿@page
+@model WatchShop.Web.Areas.Identity.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Регистрация</h2>
+                <hr />
+
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.FirstName" class="form-label fw-bold">Имя</label>
+                        <input asp-for="Input.FirstName" class="form-control" placeholder="Иван" autocomplete="firstname" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.LastName" class="form-label fw-bold">Фамилия</label>
+                        <input asp-for="Input.LastName" class="form-control" placeholder="Иванов" autocomplete="lastname" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Email" class="form-label fw-bold">Email</label>
+                        <input asp-for="Input.Email" class="form-control" placeholder="name@example.com" autocomplete="username" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Password" class="form-label fw-bold">Пароль</label>
+                        <div class="input-group">
+                            <input asp-for="Input.Password" type="password" class="form-control" id="passwordInput" placeholder="Придумайте пароль" autocomplete="new-password" />
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('passwordInput', this)">
+                                👁️
+                            </button>
+                        </div>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.ConfirmPassword" class="form-label fw-bold">Повторите пароль</label>
+                        <div class="input-group">
+                            <input asp-for="Input.ConfirmPassword" type="password" class="form-control" id="confirmPasswordInput" placeholder="Повторите пароль" autocomplete="new-password" />
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPasswordInput', this)">
+                                👁️
+                            </button>
+                        </div>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-3">Зарегистрироваться</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <p>Уже есть аккаунт? <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Войти</a></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function togglePassword(inputId, btn) {
+            var input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                btn.innerText = "🙈";
+            } else {
+                input.type = "password";
+                btn.innerText = "👁️"; 
+            }
+        }
+    </script>
+}

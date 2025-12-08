@@ -1,6 +1,6 @@
 using Microsoft.Data.Sqlite;
 
-namespace WatchStore.DataAccess
+namespace WatchShop.DataAccess
 {
     public static class DbConnectionHelper
     {

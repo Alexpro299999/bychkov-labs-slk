@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using WatchStore.DataAccess.Models;
+using WatchShop.DataAccess.Models;
 
-namespace WatchStore.WPF.Views
+namespace WatchShop.WPF.Views
 {
     public partial class AddEditManufacturerWindow : Window
     {

@@ -2,9 +2,9 @@ using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WatchStore.DataAccess.Models;
+using WatchShop.DataAccess.Models;
 
-namespace WatchStore.DataAccess.Repositories
+namespace WatchShop.DataAccess.Repositories
 {
     public class ManufacturerRepository
     {

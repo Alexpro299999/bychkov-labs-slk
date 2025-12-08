@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using WatchStore.DataAccess.Models;
+using WatchShop.DataAccess.Models;
 
-namespace WatchStore.DataAccess.Repositories
+namespace WatchShop.DataAccess.Repositories
 {
     public class StockRepository
     {

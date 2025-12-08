@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WatchStore.WPF.Views
+namespace WatchShop.WPF.Views
 {
     public partial class InputDialog : Window
     {

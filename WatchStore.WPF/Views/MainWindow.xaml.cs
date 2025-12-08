@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using WatchStore.DataAccess;
-using WatchStore.DataAccess.Models;
-using WatchStore.DataAccess.Repositories;
-using WatchStore.WPF.Services;
-using WatchStore.WPF.Views;
+using WatchShop.DataAccess;
+using WatchShop.DataAccess.Models;
+using WatchShop.DataAccess.Repositories;
+using WatchShop.WPF.Services;
+using WatchShop.WPF.Views;
 
-namespace WatchStore.WPF
+namespace WatchShop.WPF
 {
     public partial class MainWindow : Window
     {

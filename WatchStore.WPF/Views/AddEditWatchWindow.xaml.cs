@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using WatchStore.DataAccess.Models;
-using WatchStore.DataAccess.Repositories;
+using WatchShop.DataAccess.Models;
+using WatchShop.DataAccess.Repositories;
 
-namespace WatchStore.WPF.Views
+namespace WatchShop.WPF.Views
 {
     public partial class AddEditWatchWindow : Window
     {

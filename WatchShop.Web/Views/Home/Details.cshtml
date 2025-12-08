@@ -1,0 +1,40 @@
+﻿@model WatchShop.DataAccess.Models.Watch
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <img src="@(Model.ImageUrl ?? "/images/tclassic.jpg")" class="img-fluid rounded" alt="@Model.Name">
+    </div>
+    <div class="col-md-6">
+        <h4>Описание</h4>
+        <p>@Model.Description</p>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Производитель:</strong> @Model.Manufacturer.Name</li>
+            <li class="list-group-item"><strong>Категория:</strong> @Model.Category.Name</li>
+            <li class="list-group-item"><strong>Цена:</strong> <span class="fs-4 text-primary">@Model.Price.ToString("C")</span></li>
+        </ul>
+
+        <div class="mt-4">
+            @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+            {
+                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Добавить в корзину</a>
+            }
+            else if (!User.Identity.IsAuthenticated)
+            {
+                <div class="alert alert-info">
+                    Чтобы добавить товар в корзину, <a asp-area="Identity" asp-page="/Account/Login" class="alert-link">войдите</a> или <a asp-area="Identity" asp-page="/Account/Register" class="alert-link">зарегистрируйтесь</a>.
+                </div>
+            }
+            else
+            {
+            }
+
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg ms-2">Назад в каталог</a>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WatchStore.DataAccess.Models;
+using WatchShop.DataAccess.Models;
 
-namespace WatchStore.DataAccess
+namespace WatchShop.DataAccess
 {
     public class WatchDbContext : DbContext
     {

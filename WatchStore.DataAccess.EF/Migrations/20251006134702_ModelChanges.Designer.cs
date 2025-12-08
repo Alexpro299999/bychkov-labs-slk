@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WatchStore.DataAccess;
+using WatchShop.DataAccess;
 
 #nullable disable
 
-namespace WatchStore.DataAccess.EF.Migrations
+namespace WatchShop.DataAccess.EF.Migrations
 {
     [DbContext(typeof(WatchDbContext))]
     [Migration("20251006134702_ModelChanges")]
