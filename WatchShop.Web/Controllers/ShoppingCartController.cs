@@ -19,21 +19,26 @@ namespace WatchShop.Web.Controllers
         {
             var cart = HttpContext.Session.Get<List<CartItem>>("Cart") ?? new List<CartItem>();
 
-            ViewBag.Total = cart.Sum(item => item.Total);
+            var viewModel = new ShoppingCartViewModel
+            {
+                CartItems = cart,
+                Total = cart.Sum(item => item.Total)
+            };
 
-            return View(cart);
+            return View(viewModel);
         }
 
-        public async Task<IActionResult> AddToCart(int watchId)
+        // ИСПРАВЛЕНО: параметр переименован в id
+        public async Task<IActionResult> AddToCart(int id)
         {
-            var watch = await _watchRepo.GetAsync(watchId);
+            var watch = await _watchRepo.GetAsync(id);
             if (watch == null)
             {
                 return NotFound();
             }
 
             var cart = HttpContext.Session.Get<List<CartItem>>("Cart") ?? new List<CartItem>();
-            var cartItem = cart.FirstOrDefault(c => c.WatchId == watchId);
+            var cartItem = cart.FirstOrDefault(c => c.WatchId == id);
 
             if (cartItem != null)
             {
@@ -57,12 +62,33 @@ namespace WatchShop.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult RemoveFromCart(int watchId)
+        [HttpPost]
+        public IActionResult UpdateCart(int watchId, int quantity)
         {
             var cart = HttpContext.Session.Get<List<CartItem>>("Cart");
             if (cart != null)
             {
                 var item = cart.FirstOrDefault(c => c.WatchId == watchId);
+                if (item != null)
+                {
+                    if (quantity > 0)
+                        item.Quantity = quantity;
+                    else
+                        cart.Remove(item);
+
+                    HttpContext.Session.Set("Cart", cart);
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        // ИСПРАВЛЕНО: параметр переименован в id
+        public IActionResult RemoveFromCart(int id)
+        {
+            var cart = HttpContext.Session.Get<List<CartItem>>("Cart");
+            if (cart != null)
+            {
+                var item = cart.FirstOrDefault(c => c.WatchId == id);
                 if (item != null)
                 {
                     cart.Remove(item);
@@ -72,12 +98,13 @@ namespace WatchShop.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult DecreaseQuantity(int watchId)
+        // ИСПРАВЛЕНО: параметр переименован в id
+        public IActionResult DecreaseQuantity(int id)
         {
             var cart = HttpContext.Session.Get<List<CartItem>>("Cart");
             if (cart != null)
             {
-                var item = cart.FirstOrDefault(c => c.WatchId == watchId);
+                var item = cart.FirstOrDefault(c => c.WatchId == id);
                 if (item != null)
                 {
                     item.Quantity--;

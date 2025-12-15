@@ -22,7 +22,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 6;
 })
-.AddRoles<IdentityRole>() 
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

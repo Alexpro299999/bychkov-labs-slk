@@ -1,36 +1,60 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using WatchShop.DataAccess;
 using WatchShop.DataAccess.Models;
-using WatchShop.DataAccess.Repositories;
 using WatchShop.Web.Models;
 
 namespace WatchShop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IRepository<Watch> _watchRepo;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, IRepository<Watch> watchRepo)
+        public HomeController(ApplicationDbContext context)
         {
-            _logger = logger;
-            _watchRepo = watchRepo;
+            _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId, string sortOrder)
         {
-            var watches = await _watchRepo.GetAllAsync(includeProperties: "Category,Manufacturer");
-            return View(watches);
-        }
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
 
-        public async Task<IActionResult> Details(int id)
-        {
-            var watch = await _watchRepo.GetAsync(id, includeProperties: "Category,Manufacturer");
-            if (watch == null)
+            ViewBag.Categories = await _context.Categories.ToListAsync();
+            ViewBag.CurrentCategory = categoryId;
+
+            var watchesQuery = _context.Watches
+                .Include(w => w.Category)
+                .Include(w => w.Manufacturer)
+                .AsQueryable();
+
+            if (categoryId.HasValue)
             {
-                return NotFound();
+                watchesQuery = watchesQuery.Where(w => w.CategoryId == categoryId.Value);
             }
-            return View(watch);
+
+            // Сначала получаем данные из базы в список
+            var watches = await watchesQuery.ToListAsync();
+
+            // Затем сортируем этот список в памяти (C# сортирует decimal правильно)
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    watches = watches.OrderByDescending(w => w.Name).ToList();
+                    break;
+                case "Price":
+                    watches = watches.OrderBy(w => w.Price).ToList();
+                    break;
+                case "price_desc":
+                    watches = watches.OrderByDescending(w => w.Price).ToList();
+                    break;
+                default:
+                    watches = watches.OrderBy(w => w.Name).ToList();
+                    break;
+            }
+
+            return View(watches);
         }
 
         public IActionResult Privacy()

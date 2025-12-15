@@ -43,7 +43,7 @@ namespace WatchShop.DataAccess.Repositories
         {
             using (var context = new WatchDbContext())
             {
-                return context.Watches.Where(w => w.WatchType == "механические" && w.Price < price).ToList();
+                return context.Watches.Where(w => w.WatchType == "РјРµС…Р°РЅРёС‡РµСЃРєРёРµ" && w.Price < price).ToList();
             }
         }
 

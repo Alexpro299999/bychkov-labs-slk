@@ -1,58 +1,77 @@
 ﻿@model IEnumerable<WatchShop.DataAccess.Models.Watch>
-@using WatchShop.DataAccess.Models
 @{
-    ViewData["Title"] = "Каталог";
-    var categories = ViewBag.Categories as IEnumerable<Category> ?? new List<Category>();
+    ViewData["Title"] = "Каталог часов";
+    var categories = ViewBag.Categories as List<WatchShop.DataAccess.Models.Category>;
 }
 
-<style>
-    .card-img-top {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-    }
-</style>
-
-<div class="row mb-3">
-    <div class="col-md-4">
-        <form asp-action="Index" method="get">
-            <div class="input-group">
-                <input type="text" name="SearchString" value="@ViewBag.CurrentFilter" class="form-control" placeholder="Найти часы..." />
-                <button type="submit" class="btn btn-primary">Поиск</button>
-            </div>
-        </form>
-    </div>
-    <div class="col-md-8 d-flex justify-content-end align-items-center">
-        <form asp-action="Index" method="get" class="d-flex" id="filterForm">
-            <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
-            <input type="hidden" name="searchString" value="@ViewBag.CurrentFilter" />
-            <select name="category" class="form-select me-2" onchange="document.getElementById('filterForm').submit()">
-                <option value="">Все категории</option>
-                @foreach (var category in categories)
+<div class="row mt-4">
+    <div class="col-md-3">
+        <h4 class="mb-3">Категории</h4>
+        <div class="list-group">
+            <a asp-action="Index"
+               class="list-group-item list-group-item-action @(ViewBag.CurrentCategory == null ? "active" : "")">
+                Все категории
+            </a>
+            @if (categories != null)
+            {
+                foreach (var category in categories)
                 {
-                    <option value="@category.Name" selected="@(ViewBag.CurrentCategory == category.Name ? "selected" : null)">@category.Name</option>
+                    <a asp-action="Index" asp-route-categoryId="@category.Id"
+                       class="list-group-item list-group-item-action @(ViewBag.CurrentCategory == category.Id ? "active" : "")">
+                        @category.Name
+                    </a>
                 }
-            </select>
-        </form>
-
-        <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParm" asp-route-currentFilter="@ViewBag.CurrentFilter" asp-route-category="@ViewBag.CurrentCategory" class="btn btn-light me-2">Сорт. по Названию</a>
-        <a asp-action="Index" asp-route-sortOrder="@ViewBag.PriceSortParm" asp-route-currentFilter="@ViewBag.CurrentFilter" asp-route-category="@ViewBag.CurrentCategory" class="btn btn-light">Сорт. по Цене</a>
+            }
+        </div>
     </div>
-</div>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var item in Model)
-    {
-        <div class="col">
-            <div class="card h-100">
-                <img src="@(item.ImageUrl ?? "/images/tclassic.jpg")" class="card-img-top" alt="@item.Name">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
-                    <p class="card-text"><strong>@item.Price.ToString("C")</strong></p>
-                    <p class="card-text"><small class="text-muted">@item.Category.Name / @item.Manufacturer.Name</small></p>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Подробнее</a>
-                </div>
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Каталог часов</h2>
+            <div class="btn-group">
+                <span class="btn btn-outline-secondary disabled">Сортировать по:</span>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParm" asp-route-categoryId="@ViewBag.CurrentCategory" class="btn btn-outline-primary">
+                    Названию
+                </a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.PriceSortParm" asp-route-categoryId="@ViewBag.CurrentCategory" class="btn btn-outline-primary">
+                    Цене
+                </a>
             </div>
         </div>
-    }
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @if (Model.Any())
+            {
+                foreach (var watch in Model)
+                {
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <img src="@(watch.ImageUrl ?? "/images/no-image.png")" class="card-img-top p-3" alt="@watch.Name" style="height: 250px; object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">@watch.Name</h5>
+                                <p class="card-text text-muted">@watch.Description</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 mb-0 text-primary">@watch.Price.ToString("C")</span>
+                                    <small class="text-muted">@watch.Category?.Name</small>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0 pb-3">
+                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@watch.Id" class="btn btn-success w-100">
+                                    В корзину
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        В данной категории пока нет товаров.
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
